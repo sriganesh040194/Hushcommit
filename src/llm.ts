@@ -69,15 +69,15 @@ export function endpointUrl(server: ServerConfig, path: string): string {
   try {
     parsed = new URL(url);
   } catch {
-    throw new Error(`localCommitMsg.baseUrl is not a valid URL: "${server.baseUrl}".`);
+    throw new Error(`hushcommit.baseUrl is not a valid URL: "${server.baseUrl}".`);
   }
   if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-    throw new Error(`localCommitMsg.baseUrl must start with http:// or https://, got "${server.baseUrl}".`);
+    throw new Error(`hushcommit.baseUrl must start with http:// or https://, got "${server.baseUrl}".`);
   }
   if (!server.allowRemote && !LOOPBACK_HOSTS.has(parsed.hostname)) {
     throw new Error(
       `Refusing to send your staged diff to ${parsed.host}: it is not this machine (localhost, 127.0.0.1 or ::1). ` +
-        'If you trust that server, enable the localCommitMsg.allowRemote setting.',
+        'If you trust that server, enable the hushcommit.allowRemote setting.',
     );
   }
   return url;

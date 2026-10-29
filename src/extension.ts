@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import type { API, GitExtension, Repository } from './git';
 import { chat, listModels, ServerConfig } from './llm';
 
-const API_KEY_SECRET = 'localCommitMsg.apiKey';
+const API_KEY_SECRET = 'hushcommit.apiKey';
 const SELECT_MODEL = 'Select model';
 const ENTER_MODEL_ID = 'Enter model id';
 
@@ -24,24 +24,24 @@ const DEFAULT_INSTRUCTIONS = [
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
-    vscode.commands.registerCommand('localCommitMsg.generate', (scmArgument?: unknown) =>
+    vscode.commands.registerCommand('hushcommit.generate', (scmArgument?: unknown) =>
       showErrors(() => generate(context, scmArgument)),
     ),
-    vscode.commands.registerCommand('localCommitMsg.selectModel', () => showErrors(() => selectModel(context))),
-    vscode.commands.registerCommand('localCommitMsg.setApiKey', () => showErrors(() => setApiKey(context))),
-    vscode.commands.registerCommand('localCommitMsg.clearApiKey', () => showErrors(() => clearApiKey(context))),
+    vscode.commands.registerCommand('hushcommit.selectModel', () => showErrors(() => selectModel(context))),
+    vscode.commands.registerCommand('hushcommit.setApiKey', () => showErrors(() => setApiKey(context))),
+    vscode.commands.registerCommand('hushcommit.clearApiKey', () => showErrors(() => clearApiKey(context))),
   );
 }
 
 export function deactivate(): void {}
 
 async function generate(context: vscode.ExtensionContext, scmArgument: unknown): Promise<void> {
-  const config = vscode.workspace.getConfiguration('localCommitMsg');
+  const config = vscode.workspace.getConfiguration('hushcommit');
   const server = await readServerConfig(context, config);
   if (!server.model) {
-    const choice = await vscode.window.showErrorMessage('No model is set (localCommitMsg.model).', SELECT_MODEL);
+    const choice = await vscode.window.showErrorMessage('No model is set (hushcommit.model).', SELECT_MODEL);
     if (choice === SELECT_MODEL) {
-      await vscode.commands.executeCommand('localCommitMsg.selectModel');
+      await vscode.commands.executeCommand('hushcommit.selectModel');
     }
     return;
   }
@@ -57,7 +57,7 @@ async function generate(context: vscode.ExtensionContext, scmArgument: unknown):
   const maxDiffChars = config.get<number>('maxDiffChars', 40000);
   if (diff.length > maxDiffChars) {
     vscode.window.showWarningMessage(
-      `The staged diff is ${diff.length} characters. Only the first ${maxDiffChars} were sent (localCommitMsg.maxDiffChars).`,
+      `The staged diff is ${diff.length} characters. Only the first ${maxDiffChars} were sent (hushcommit.maxDiffChars).`,
     );
     diff = diff.slice(0, maxDiffChars);
   }
@@ -82,7 +82,7 @@ async function generate(context: vscode.ExtensionContext, scmArgument: unknown):
 }
 
 async function selectModel(context: vscode.ExtensionContext): Promise<void> {
-  const config = vscode.workspace.getConfiguration('localCommitMsg');
+  const config = vscode.workspace.getConfiguration('hushcommit');
   const server = await readServerConfig(context, config);
   let modelId: string | undefined;
   try {
@@ -146,7 +146,7 @@ function withRequestSignal<T>(
     async (_progress, token) => {
       const controller = new AbortController();
       const timer = setTimeout(
-        () => controller.abort(new Error(`timed out after ${timeoutSeconds} s (localCommitMsg.requestTimeoutSeconds)`)),
+        () => controller.abort(new Error(`timed out after ${timeoutSeconds} s (hushcommit.requestTimeoutSeconds)`)),
         timeoutSeconds * 1000,
       );
       const cancelListener = token.onCancellationRequested(() => controller.abort(new Error('was cancelled')));

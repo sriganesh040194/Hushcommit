@@ -1,8 +1,8 @@
 {
-  "name": "local-commit-msg",
-  "displayName": "Commit Message (OpenAI-compatible)",
+  "name": "hushcommit",
+  "displayName": "Hushcommit",
   "description": "Generate a git commit message from the staged diff using an OpenAI-compatible server you choose.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "local",
   "private": true,
   "license": "UNLICENSED",
@@ -20,75 +20,75 @@
   "contributes": {
     "commands": [
       {
-        "command": "localCommitMsg.generate",
-        "title": "Generate commit message (OpenAI-compatible)",
+        "command": "hushcommit.generate",
+        "title": "Hushcommit: Generate commit message",
         "icon": "$(sparkle)"
       },
       {
-        "command": "localCommitMsg.selectModel",
-        "title": "Commit Message: Select model"
+        "command": "hushcommit.selectModel",
+        "title": "Hushcommit: Select model"
       },
       {
-        "command": "localCommitMsg.setApiKey",
-        "title": "Commit Message: Set API key"
+        "command": "hushcommit.setApiKey",
+        "title": "Hushcommit: Set API key"
       },
       {
-        "command": "localCommitMsg.clearApiKey",
-        "title": "Commit Message: Clear API key"
+        "command": "hushcommit.clearApiKey",
+        "title": "Hushcommit: Clear API key"
       }
     ],
     "menus": {
       "scm/title": [
         {
-          "command": "localCommitMsg.generate",
+          "command": "hushcommit.generate",
           "when": "scmProvider == git",
           "group": "navigation"
         }
       ]
     },
     "configuration": {
-      "title": "Commit Message (OpenAI-compatible)",
+      "title": "Hushcommit",
       "properties": {
-        "localCommitMsg.baseUrl": {
+        "hushcommit.baseUrl": {
           "type": "string",
           "default": "http://localhost:11434/v1",
           "description": "Base URL of the OpenAI-compatible API, ending in /v1. Examples: Ollama http://localhost:11434/v1, LM Studio http://localhost:1234/v1 (use the port shown in LM Studio's Developer tab)."
         },
-        "localCommitMsg.model": {
+        "hushcommit.model": {
           "type": "string",
           "default": "",
-          "description": "Model id to use, e.g. qwen3-coder:30b. Run \"Commit Message: Select model\" to pick from the server's list."
+          "description": "Model id to use, e.g. qwen3-coder:30b. Run \"Hushcommit: Select model\" to pick from the server's list."
         },
-        "localCommitMsg.instructions": {
+        "hushcommit.instructions": {
           "type": "string",
           "default": "",
           "editPresentation": "multilineText",
           "description": "Custom system prompt. If set, it replaces the built-in prompt."
         },
-        "localCommitMsg.maxDiffChars": {
+        "hushcommit.maxDiffChars": {
           "type": "number",
           "default": 40000,
           "minimum": 1,
           "description": "Longest staged diff (in characters) sent to the model. Longer diffs are cut, with a warning."
         },
-        "localCommitMsg.temperature": {
+        "hushcommit.temperature": {
           "type": "number",
           "default": 0.2,
           "description": "Sampling temperature sent with each request."
         },
-        "localCommitMsg.maxTokens": {
+        "hushcommit.maxTokens": {
           "type": "number",
           "default": 0,
           "minimum": 0,
           "description": "max_tokens sent with each request. 0 means don't send it. Some servers require it."
         },
-        "localCommitMsg.requestTimeoutSeconds": {
+        "hushcommit.requestTimeoutSeconds": {
           "type": "number",
           "default": 120,
           "minimum": 1,
           "description": "Seconds to wait for the server before giving up."
         },
-        "localCommitMsg.allowRemote": {
+        "hushcommit.allowRemote": {
           "type": "boolean",
           "default": false,
           "description": "Allow a baseUrl whose host is not localhost, 127.0.0.1 or ::1. When off, the staged diff never leaves this machine."
