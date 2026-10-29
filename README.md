@@ -25,7 +25,7 @@ npm run compile
 npx vsce package --no-dependencies
 ```
 
-This produces `hushcommit-0.0.2.vsix`. In VS Code, go to Extensions → `⋯` → **Install from VSIX…** and pick that file.
+This produces `hushcommit-0.0.3.vsix`. In VS Code, go to Extensions → `⋯` → **Install from VSIX…** and pick that file.
 
 To try it without installing, open this folder in VS Code, run `npm run compile`, then press **F5** to launch an Extension Development Host.
 
