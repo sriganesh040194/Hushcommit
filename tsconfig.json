@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "outDir": "out",
+    "rootDir": "src",
+    "strict": true,
+    "sourceMap": true,
+    // git.d.ts is copied verbatim and imports a proposed VS Code API type that @types/vscode lacks.
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
