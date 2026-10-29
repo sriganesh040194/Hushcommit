@@ -1,8 +1,10 @@
-# Commit Message (OpenAI-compatible)
+# Hushcommit
 
-A small private VS Code extension. It adds a ✨ button to the Source Control panel. The button sends your **staged** diff to an OpenAI-compatible chat API that you choose, then writes the reply into the commit message box.
+A private VS Code extension that writes your git commit message from the staged diff, using a local or self-chosen OpenAI-compatible model. No runtime dependencies, no telemetry; your code goes only to the server you configure.
 
-It works with Ollama, LM Studio, llama.cpp (`llama-server`), vLLM, or a hosted OpenAI-compatible API.
+It adds a ✨ button to the Source Control panel. The button sends your **staged** diff to the chat API you set in Settings, then writes the reply into the commit message box. It works with Ollama, LM Studio, llama.cpp (`llama-server`), vLLM, or a hosted OpenAI-compatible API.
+
+In VS Code it appears as "Commit Message (OpenAI-compatible)".
 
 ## What it sends, and where
 
@@ -18,6 +20,8 @@ It works with Ollama, LM Studio, llama.cpp (`llama-server`), vLLM, or a hosted O
 Requires Node 22+.
 
 ```sh
+git clone git@github.com:sriganesh040194/Hushcommit.git
+cd Hushcommit
 npm ci
 npm run compile
 npx vsce package --no-dependencies
@@ -31,7 +35,7 @@ To try it without installing, open this folder in VS Code, run `npm run compile`
 
 1. Run **Commit Message: Select model** from the Command Palette and pick a model. It is saved to the `localCommitMsg.model` user setting.
 2. Stage your changes.
-3. Click ✨ in the Source Control title bar.
+3. Click ✨ in the Source Control **title bar** (tooltip: "Generate commit message (OpenAI-compatible)"). If GitHub Copilot is installed, the ✨ inside the commit message box is Copilot's, not this extension's.
 
 The built-in prompt asks for the [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) format, e.g. `fix(llm): report the server URL on connection errors`. The model is asked for this format, but the reply isn't checked, so review it before committing. To use a different format, set `localCommitMsg.instructions`.
 
